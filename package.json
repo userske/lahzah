@@ -6,6 +6,7 @@
     "@aws-sdk/client-s3": "^3.1136.0",
     "@callstack/liquid-glass": "^0.8.2",
     "@config-plugins/react-native-webrtc": "^15.0.2",
+    "@dr.pogodin/react-native-fs": "^2.40.3",
     "@expo-google-fonts/dm-mono": "^0.4.2",
     "@expo-google-fonts/inter": "^0.4.2",
     "@expo-google-fonts/source-serif-4": "^0.4.1",
