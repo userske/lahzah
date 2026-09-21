@@ -1,0 +1,27 @@
+# Inherit all gitignore rules
+node_modules/
+.expo/
+dist/
+web-build/
+/ios
+/android
+.env
+.env*.local
+
+# Editor & AI tooling — not needed for builds
+.claude/
+.impeccable/
+.vscode/
+.gemini/
+
+# Documentation
+*.md
+!README.md
+
+# Dev tools
+.DS_Store
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.tsbuildinfo
+.metro-health-check*
