@@ -27,7 +27,6 @@
     "expo-asset": "~57.0.17",
     "expo-audio": "~57.0.5",
     "expo-auth-session": "~57.0.12",
-    "expo-av": "^16.0.8",
     "expo-blur": "~57.0.3",
     "expo-clipboard": "~57.0.2",
     "expo-constants": "~57.0.18",
