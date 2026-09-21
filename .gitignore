@@ -42,3 +42,10 @@ example
 /ios
 /android
 .env
+
+# Editor & AI tooling
+.claude/
+.impeccable/
+.vscode/
+.gemini/
+.cursor/
