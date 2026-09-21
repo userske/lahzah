@@ -15,7 +15,7 @@
         "UIBackgroundModes": [
           "audio"
         ],
-        "NSContactsUsageDescription": "Allow Lahzah to access your contacts to find friends.",
+
         "NSCameraUsageDescription": "Allow Lahzah to access your camera for group video calls.",
         "NSMicrophoneUsageDescription": "Allow Lahzah to access your microphone for voice rooms.",
         "NSSupportsLiveActivities": true,
@@ -37,9 +37,7 @@
         "android.permission.MODIFY_AUDIO_SETTINGS",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
-        "android.permission.READ_CONTACTS",
         "android.permission.CAMERA",
-        "android.permission.WRITE_CONTACTS",
         "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.INTERNET",
         "android.permission.SYSTEM_ALERT_WINDOW",
@@ -83,12 +81,7 @@
           ]
         }
       ],
-      [
-        "expo-contacts",
-        {
-          "contactsPermission": "Allow Lahzah to access your contacts to find friends."
-        }
-      ],
+
       "expo-sqlite",
       "@livekit/react-native-expo-plugin",
       "@config-plugins/react-native-webrtc"
