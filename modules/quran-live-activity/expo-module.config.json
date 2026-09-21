@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["QuranLiveActivityModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.quranliveactivity.QuranLiveActivityModule"]
+  }
+}

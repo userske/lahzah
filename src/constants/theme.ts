@@ -3,53 +3,60 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
-import '@/global.css';
-
 import { Platform } from 'react-native';
 
 export const Colors = {
   light: {
     text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    background: '#EEEBE3',
+    backgroundElement: '#f8f9fa',
+    backgroundSelected: '#e5e5e5',
+    textSecondary: '#555555',
   },
   dark: {
     text: '#ffffff',
     background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    backgroundElement: '#121212',
+    backgroundSelected: '#222222',
+    textSecondary: '#aaaaaa',
   },
+  lahzah: {
+    paper: '#EEEBE3',
+    stone: '#e5e5e5',
+    coral: '#000000',
+    black: '#000000',
+  }
+} as const;
+
+/**
+ * The canonical Lahzah design palette.
+ * Use `theme.colors.paper`, `theme.colors.coral`, etc. across all components.
+ */
+export const theme = {
+  colors: Colors.lahzah,
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
-  },
-});
+export const Fonts = {
+  // Headings & Large Display numbers
+  display: 'Syne_700Bold',
+  displayMedium: 'Syne_600SemiBold',
+  displayRegular: 'Syne_400Regular',
+  
+  // Body text
+  sans: 'Inter_400Regular',
+  sansMedium: 'Inter_500Medium',
+  sansSemiBold: 'Inter_600SemiBold',
+  sansBold: 'Inter_700Bold',
+  
+  // Monospace
+  mono: 'DMMono_400Regular',
+  monoMedium: 'DMMono_500Medium',
+  
+  // Arabic Script
+  arabic: 'AmiriQuran',
+};
 
 export const Spacing = {
   half: 2,
