@@ -1,5 +1,3 @@
-import { createSTT, SttEngine } from 'react-native-sherpa-onnx';
-
 /**
  * sttApi.ts — Zipformer Phoneme STT (Offline version)
  *
@@ -11,17 +9,26 @@ import { createSTT, SttEngine } from 'react-native-sherpa-onnx';
  *
  * Compare the output phonemes against quran_text2phoneme.json (canonical Ḥafṣ)
  * to detect Tajweed mistakes — not against Arabic text.
+ *
+ * NOTE: react-native-sherpa-onnx depends on @dr.pogodin/react-native-fs which
+ * requires a native module (ReactNativeFs) that must be present in the build.
+ * We lazy-import it to avoid crashing at module load time on platforms where
+ * the native module isn't linked (e.g. Expo Go or builds without the module).
  */
 
-let sttEngine: SttEngine | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let sttEngine: any | null = null;
 
-const initSttEngine = async (): Promise<SttEngine> => {
+const initSttEngine = async () => {
   if (sttEngine) return sttEngine;
 
   try {
+    // Lazy import: only pulled in when first called, avoiding a crash at app
+    // startup on builds/platforms where ReactNativeFs is not registered.
+    const { createSTT } = await import('react-native-sherpa-onnx');
     sttEngine = await createSTT({
       modelPath: { type: 'asset', path: 'models' }, // Bundled via expo-asset plugin in app.json
-      modelType: 'zipformer_ctc', 
+      modelType: 'zipformer_ctc',
       preferInt8: true, // Uses quran_phoneme_zipformer_int8.onnx (renamed from .int8.onnx for Android compatibility)
     });
     return sttEngine;
@@ -41,7 +48,7 @@ export interface STTResponse {
 export const transcribeAudio = async (uri: string): Promise<STTResponse> => {
   try {
     const engine = await initSttEngine();
-    
+
     // In React Native Expo, the URI is often a file:// path.
     // Sherpa-ONNX transcribeFile expects an absolute file path without the file:// prefix on some platforms.
     const filePath = uri.replace(/^file:\/\//, '');
@@ -49,9 +56,9 @@ export const transcribeAudio = async (uri: string): Promise<STTResponse> => {
     const result = await engine.transcribeFile(filePath);
 
     // The result.text is the transcribed phonemes separated by whatever tokenizer format it is in.
-    return { 
-      text: result.text.trim(), 
-      isPhonemes: true 
+    return {
+      text: result.text.trim(),
+      isPhonemes: true
     };
   } catch (error: any) {
     return {
@@ -61,3 +68,4 @@ export const transcribeAudio = async (uri: string): Promise<STTResponse> => {
     };
   }
 };
+

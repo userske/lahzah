@@ -3,7 +3,7 @@ import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
   State,
-  usePlaybackState,
+  useIsPlaying,
   useProgress,
 } from 'react-native-track-player';
 import { Reciter, DEFAULT_RECITER } from '../data/reciters';
@@ -29,6 +29,11 @@ const setupPlayer = async () => {
       ],
       compactCapabilities: [Capability.Play, Capability.Pause, Capability.SkipToNext],
     });
+    
+    // 🔴 FORCE STOP ANY GHOST AUDIO 🔴
+    // This catches audio playing from a previous detached hot-reload session
+    await TrackPlayer.stop();
+    
     isPlayerInitialized = true;
   } catch (e) {
   }
@@ -56,7 +61,7 @@ interface AudioContextType {
 export const AudioContext = createContext<AudioContextType | null>(null);
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
-  const playbackState = usePlaybackState();
+  const { playing, bufferingDuringPlay } = useIsPlaying();
   const { position, duration } = useProgress();
 
   const [playlist, setPlaylist] = useState<string[]>([]);
@@ -67,8 +72,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     setupPlayer();
   }, []);
 
-  const isPlaying = playbackState.state === State.Playing;
-  const isLoading = playbackState.state === State.Buffering || playbackState.state === State.Loading;
+  const isPlaying = playing === true;
+  const isLoading = bufferingDuringPlay === true;
 
   // Sync Live Activity
   useEffect(() => {
@@ -122,8 +127,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   };
 
   const togglePlayback = async () => {
-    const state = await TrackPlayer.getPlaybackState();
-    if (state.state === State.Playing) {
+    const playState = await TrackPlayer.getPlaybackState();
+    const playWhenReady = await TrackPlayer.getPlayWhenReady();
+    if (playWhenReady && playState.state !== State.Paused && playState.state !== State.Stopped && playState.state !== State.None) {
       await TrackPlayer.pause();
     } else {
       await TrackPlayer.play();

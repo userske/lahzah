@@ -111,7 +111,8 @@ async function downloadSurah(surahNum: number): Promise<boolean> {
 }
 
 // ─── Main preload function ────────────────────────────────────────────────────
-const BATCH_SIZE = 8; // concurrent downloads
+// Reduced batch size to avoid overwhelming iOS's URL session task dispatcher.
+const BATCH_SIZE = 4;
 
 async function downloadBatch<T>(
   items: T[],

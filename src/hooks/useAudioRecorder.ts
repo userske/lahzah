@@ -6,7 +6,17 @@ import {
   RecordingPresets,
   setAudioModeAsync,
 } from 'expo-audio';
-import { analyzeAudioWithAI } from '../services/quranAiApi';
+// Lazy import — avoids pulling react-native-sherpa-onnx (and its
+// @dr.pogodin/react-native-fs dependency) into the startup bundle before
+// the native ReactNativeFs module is registered in the binary.
+let _analyzeAudioWithAI: typeof import('../services/quranAiApi').analyzeAudioWithAI | null = null;
+const getAnalyzeAudioWithAI = async () => {
+  if (!_analyzeAudioWithAI) {
+    const mod = await import('../services/quranAiApi');
+    _analyzeAudioWithAI = mod.analyzeAudioWithAI;
+  }
+  return _analyzeAudioWithAI;
+};
 import { Alert } from 'react-native';
 
 export function useAudioRecorder() {
@@ -48,6 +58,7 @@ export function useAudioRecorder() {
 
       if (!uri) throw new Error('Failed to get recording URI');
 
+      const analyzeAudioWithAI = await getAnalyzeAudioWithAI();
       const result = await analyzeAudioWithAI({ uri, reference });
       
       setAnalysisResult(result);
