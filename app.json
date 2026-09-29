@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "temp_app",
+    "name": "Lahzah",
     "slug": "temp_app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "icon": "./assets/expo.icon",
+      "icon": "./assets/images/icon.png",
       "bundleIdentifier": "com.twalibania.temp-app",
       "infoPlist": {
         "UIBackgroundModes": [

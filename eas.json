@@ -17,6 +17,15 @@
     "preview": {
       "distribution": "internal"
     },
+    "altstore": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      },
+      "env": {
+        "npm_config_legacy_peer_deps": "true"
+      }
+    },
     "production": {
       "autoIncrement": true
     }
