@@ -4,7 +4,7 @@ import {
   TextInput, ActivityIndicator, Alert, Modal, Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   ArrowLeft, Brain, Calculator, Calendar, CheckCircle,
@@ -800,7 +800,7 @@ function RetentionPanel({ colors, isDark, userId, memorizedAyahs }: {
 
       {/* Share to Circle Modal */}
       <Modal visible={!!shareSessionTarget} transparent animationType="slide">
-        <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
           <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => setShareSessionTarget(null)} />
           <View style={{ backgroundColor: isDark ? 'rgba(18,18,18,0.92)' : 'rgba(250,250,250,0.92)', borderTopLeftRadius: 32, borderTopRightRadius: 32, padding: 24, paddingBottom: 40 }}>
             <View style={{ width: 40, height: 4, borderRadius: 2, backgroundColor: 'rgba(150,150,150,0.3)', alignSelf: 'center', marginBottom: 20 }} />
@@ -840,7 +840,7 @@ function RetentionPanel({ colors, isDark, userId, memorizedAyahs }: {
               </View>
             )}
           </View>
-        </BlurView>
+        </GlassBlur>
       </Modal>
     </ScrollView>
   );
@@ -891,7 +891,7 @@ export default function HifzScreen() {
     return (
       <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
         {/* Header */}
-        <BlurView intensity={80} tint={tint} style={[styles.header, { borderBottomColor: colors.border }]}>
+        <GlassBlur intensity={80} tint={tint} style={[styles.header, { borderBottomColor: colors.border }]}>
           <TouchableOpacity onPress={() => router.push('/(tabs)/messages')} style={styles.backBtn}>
             <ArrowLeft size={22} color={colors.text} />
           </TouchableOpacity>
@@ -899,7 +899,7 @@ export default function HifzScreen() {
             <Text style={[styles.headerTitle, { color: colors.text }]}>Hifz</Text>
           </View>
           <View style={{ width: 38 }} />
-        </BlurView>
+        </GlassBlur>
         {/* Auth gate */}
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32, gap: 20 }}>
           <Animated.View entering={FadeInDown.duration(500).easing(Easing.out(Easing.exp))} style={{ alignItems: 'center', gap: 20 }}>
@@ -935,7 +935,7 @@ export default function HifzScreen() {
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={['top']}>
       {/* Header */}
-      <BlurView intensity={80} tint={tint} style={[styles.header, { borderBottomColor: colors.border }]}>
+      <GlassBlur intensity={80} tint={tint} style={[styles.header, { borderBottomColor: colors.border }]}>
         <TouchableOpacity onPress={() => router.push('/(tabs)/messages')} style={styles.backBtn}>
           <ArrowLeft size={22} color={colors.text} />
         </TouchableOpacity>
@@ -948,7 +948,7 @@ export default function HifzScreen() {
           </Text>
         </View>
         <View style={{ width: 38 }} />
-      </BlurView>
+      </GlassBlur>
 
       {/* Tab switcher */}
       <View style={[styles.tabRow, { backgroundColor: colors.surface, borderBottomColor: colors.border }]}>

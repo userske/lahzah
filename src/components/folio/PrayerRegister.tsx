@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { View, Text, StyleSheet, ImageBackground, Animated, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import { setAudioModeAsync } from 'expo-audio';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -333,7 +333,7 @@ export function PrayerRegister({ prayerTimes, qiblaAngle, onSettingsChange }: Pr
                   ) : (
                     /* Inactive pill — frosted glass */
                     <TouchableOpacity onPress={() => toggleReminder(entry)} activeOpacity={0.7} style={{ flex: 1 }}>
-                      <BlurView
+                      <GlassBlur
                         intensity={20}
                         tint="light"
                         style={styles.pill}
@@ -349,7 +349,7 @@ export function PrayerRegister({ prayerTimes, qiblaAngle, onSettingsChange }: Pr
                           <Text style={styles.pillName}>{entry.name}</Text>
                           <Text style={styles.pillTime}>{formatClock(entry.at)}</Text>
                         </View>
-                      </BlurView>
+                      </GlassBlur>
                     </TouchableOpacity>
                   )}
                 </View>
@@ -441,7 +441,7 @@ export function PrayerRegister({ prayerTimes, qiblaAngle, onSettingsChange }: Pr
       {/* ── Settings Modal ── */}
       <Modal visible={showSettings} transparent animationType="fade" onRequestClose={() => setShowSettings(false)}>
         <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setShowSettings(false)}>
-          <BlurView intensity={60} tint="dark" style={styles.settingsSheet}>
+          <GlassBlur intensity={60} tint="dark" style={styles.settingsSheet}>
             <View style={styles.settingsHandle} />
             <Text style={styles.settingsTitle}>Prayer Settings</Text>
 
@@ -504,7 +504,7 @@ export function PrayerRegister({ prayerTimes, qiblaAngle, onSettingsChange }: Pr
                 </TouchableOpacity>
               ))}
             </View>
-          </BlurView>
+          </GlassBlur>
         </TouchableOpacity>
       </Modal>
     </>

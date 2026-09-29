@@ -13,7 +13,7 @@ import Animated, {
   withTiming,
   type SharedValue,
 } from 'react-native-reanimated';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from './GlassCard';
 import { LiquidGlassView, isLiquidGlassSupported } from '@callstack/liquid-glass';
 import * as Haptics from 'expo-haptics';
 import type { Tabs } from 'expo-router';
@@ -245,13 +245,13 @@ export function Dock({ state, navigation }: DockProps) {
           {dockContent}
         </LiquidGlassView>
       ) : (
-        <BlurView
+        <GlassBlur
           intensity={isNight ? 55 : 70}
           tint={tint}
           style={glassStyle}
         >
           {dockContent}
-        </BlurView>
+        </GlassBlur>
       )}
     </View>
   );

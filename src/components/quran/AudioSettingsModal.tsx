@@ -16,7 +16,7 @@ import { ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { usePreferences } from '../../hooks/usePreferences';
 import { useAudioDownload } from '../../hooks/useAudioDownload';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
 import { Reciter } from '../../data/reciters';
@@ -285,7 +285,7 @@ export const AudioSettingsModal = ({
       <View style={styles.modalOverlay}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
         <View style={[styles.bottomSheetContainer]}>
-          <BlurView intensity={isDark ? 50 : 80} tint={isDark ? "dark" : "light"} style={StyleSheet.absoluteFill} />
+          <GlassBlur intensity={isDark ? 50 : 80} tint={isDark ? "dark" : "light"} style={StyleSheet.absoluteFill} />
           
           <View style={styles.modalContent}>
             <View style={styles.dragHandle} />

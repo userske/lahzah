@@ -3,7 +3,7 @@ import {
   View, Text, StyleSheet, TouchableOpacity, ActivityIndicator,
   ScrollView, Alert, Modal, FlatList, Pressable,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { BookOpen, Shuffle, ChevronDown, ChevronRight, X, Search, Eye, Volume2 } from 'lucide-react-native';
 import Animated, { FadeInDown, FadeIn, Easing } from 'react-native-reanimated';
@@ -87,7 +87,7 @@ function BlurredSimilarVerse({ verse, colors, isDark, playVerseAudio }: { verse:
           {verse.arabic}
         </Text>
         {!revealed && (
-          <BlurView
+          <GlassBlur
             intensity={isDark ? 30 : 22}
             tint={isDark ? 'dark' : 'light'}
             style={StyleSheet.absoluteFill}

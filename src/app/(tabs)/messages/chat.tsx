@@ -13,7 +13,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import QRCode from 'react-native-qrcode-svg';
 import * as Clipboard from 'expo-clipboard';
 import * as Haptics from 'expo-haptics';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { supabase } from '../../../lib/supabase';
 import { useAppTheme } from '../../../hooks/useAppTheme';
 import { Fonts } from '../../../constants/theme';
@@ -847,7 +847,7 @@ export default function CircleChat() {
         <LinearGradient colors={isDark ? ['rgba(0,0,0,0.6)', 'rgba(0,0,0,0.8)'] : ['rgba(255,255,255,0.7)', 'rgba(255,255,255,0.9)']} style={StyleSheet.absoluteFill} />
       </View>
       <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
-      <BlurView intensity={80} tint={isDark ? 'dark' : 'light'} style={[styles.header, { backgroundColor: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.7)', borderBottomColor: colors.border }]}>
+      <GlassBlur intensity={80} tint={isDark ? 'dark' : 'light'} style={[styles.header, { backgroundColor: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.7)', borderBottomColor: colors.border }]}>
         <TouchableOpacity onPress={() => router.push('/(tabs)/messages')} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <ArrowLeft size={22} color={colors.text} />
         </TouchableOpacity>
@@ -870,7 +870,7 @@ export default function CircleChat() {
         <TouchableOpacity onPress={() => setShowSettings(true)} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
           <Settings size={20} color={colors.textSecondary} />
         </TouchableOpacity>
-      </BlurView>
+      </GlassBlur>
 
       {/* Group Goal Sticky Header - tappable for all members */}
       {(readingGoal || hifzGoal) && (
@@ -951,7 +951,7 @@ export default function CircleChat() {
           </Animated.View>
         )}
 
-        <BlurView intensity={80} tint={isDark ? 'dark' : 'light'} style={[styles.composer, { backgroundColor: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.7)', borderTopColor: colors.border }]}>
+        <GlassBlur intensity={80} tint={isDark ? 'dark' : 'light'} style={[styles.composer, { backgroundColor: isDark ? 'rgba(0,0,0,0.6)' : 'rgba(255,255,255,0.7)', borderTopColor: colors.border }]}>
           {canPost ? (
             <>
               <TouchableOpacity onPress={() => setShowAttachMenu(!showAttachMenu)} style={{ padding: 8, paddingBottom: 12 }}>
@@ -1039,7 +1039,7 @@ export default function CircleChat() {
           ) : (
             <Text style={[styles.composerLocked, { color: colors.textTertiary }]}>Only admins can send messages.</Text>
           )}
-        </BlurView>
+        </GlassBlur>
       </KeyboardAvoidingView>
 
       <MessageContextMenu
@@ -1149,7 +1149,7 @@ export default function CircleChat() {
       </Modal>
 
       <Modal visible={showSettings} transparent animationType="slide" onRequestClose={() => setShowSettings(false)}>
-        <BlurView intensity={80} tint={colors.background === '#000000' ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <GlassBlur intensity={80} tint={colors.background === '#000000' ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
           <View style={[styles.settingsSheet, { backgroundColor: colors.background === '#000000' ? 'rgba(20,20,20,0.85)' : 'rgba(255,255,255,0.85)' }]}>
             
             <View style={styles.dragHandle} />
@@ -1393,7 +1393,7 @@ export default function CircleChat() {
               </View>
             )}
           </View>
-        </BlurView>
+        </GlassBlur>
       </Modal>
       </SafeAreaView>
     </ImageBackground>

@@ -1,6 +1,6 @@
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowRight, BookOpen, PauseCircle, PlayCircle, Settings } from 'lucide-react-native';
+import { ArrowRight, BookOpen, PauseCircle, PlayCircle, Settings, Square } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import {
   StyleSheet,
@@ -121,7 +121,6 @@ export const ContinueReadingCard = ({
 
   const [endAyah, setEndAyah] = useState<number>(7);
   const [pickerTab, setPickerTab] = useState<'surah' | 'reciter' | 'ayah'>('surah');
-  const [isLocalPlaying, setIsLocalPlaying] = useState(false);
   const [loadingAudio, setLoadingAudio] = useState(false);
   // Maps each track index → { surah, ayah } so we can show real names while playing
   const [playbackMap, setPlaybackMap] = useState<{ surah: number; ayah: number | null }[]>([]);
@@ -157,7 +156,6 @@ export const ContinueReadingCard = ({
         }
         setPlaybackMap(map);
         await localPlayer.playPlaylist(urls, 0);
-        setIsLocalPlaying(true);
       } else if (reciter.isChapterOnly && reciter.quranicAudioPath) {
         const urls: string[] = [];
         const map: { surah: number; ayah: number | null }[] = [];
@@ -179,7 +177,6 @@ export const ContinueReadingCard = ({
         }
         setPlaybackMap(map);
         await localPlayer.playPlaylist(urls, 0);
-        setIsLocalPlaying(true);
       } else {
         let allUrls: string[] = [];
         const map: { surah: number; ayah: number | null }[] = [];
@@ -222,7 +219,6 @@ export const ContinueReadingCard = ({
         if (allUrls.length > 0) {
           setPlaybackMap(map);
           await localPlayer.playPlaylist(allUrls, 0);
-          setIsLocalPlaying(true);
         }
       }
     } catch (err) {
@@ -237,7 +233,6 @@ export const ContinueReadingCard = ({
 
   const handlePauseLocal = () => {
     localPlayer.togglePlayback();
-    setIsLocalPlaying(false);
   };
 
 
@@ -262,7 +257,7 @@ export const ContinueReadingCard = ({
   return (
     <View style={styles.card}>
       {/* Base blur - matched to PrayerRegister pills */}
-      <BlurView
+      <GlassBlur
         intensity={20}
         tint={isDark ? 'dark' : 'light'}
         style={StyleSheet.absoluteFill}
@@ -340,7 +335,7 @@ export const ContinueReadingCard = ({
             activeOpacity={0.82}
             onPress={() => {
               if (surahNumber) requestSurah(surahNumber, ayahNumber ?? undefined);
-              router.push('/(tabs)/reader');
+              router.push('/reader');
             }}
           >
             <Text style={[styles.ctaBtnText, { color: isDark ? '#0d0d0d' : '#fff' }]}>
@@ -358,7 +353,7 @@ export const ContinueReadingCard = ({
           >
             <Settings size={14} color={textTertiary} />
             <Text style={[styles.miniPlayerText, { color: textSecondary }]} numberOfLines={1}>
-              {isLocalPlaying
+              {localPlayer.isPlaying
                 ? (() => {
                   const track = playbackMap[localPlayer.currentTrackIndex];
                   if (!track) return `Playing: ${ENGLISH_NAMES[selectedSurah] ?? `Surah ${selectedSurah}`}`;
@@ -380,36 +375,53 @@ export const ContinueReadingCard = ({
             {loadingAudio ? (
               <ActivityIndicator size="small" color={textPrimary} />
             ) : (
-              <TouchableOpacity
-                style={styles.miniPlayerBtn}
-                onPress={() => {
-                  if (isLocalPlaying) {
-                    handlePauseLocal();
-                  } else if (audioState.isPlaying) {
-                    audioState.togglePlayback?.();
-                  } else if (lastPersistedAudio) {
-                    // Resume from persisted session — find the saved reciter, sync it
-                    // globally so both home and quran pages stay in agreement, then play.
-                    const reciter = reciters
-                      .find(r => r.id === lastPersistedAudio.reciterId) || DEFAULT_RECITER;
-                    setSelectedReciter(reciter);
-                    playWithConfig(
-                      lastPersistedAudio.surahNumber,
-                      lastPersistedAudio.ayahNumber,
-                      lastPersistedAudio.surahNumber,
-                      999,
-                      reciter,
-                    );
-                  } else {
-                    handlePlayLocal();
+              <>
+                {(localPlayer.isPlaying || audioState.isPlaying) && (
+                  <TouchableOpacity
+                    style={[styles.miniPlayerBtn, { marginRight: 12 }]}
+                    onPress={() => {
+                      if (localPlayer.isPlaying) {
+                        localPlayer.stopAudio();
+                      } else if (audioState.isPlaying) {
+                        // If audio is playing from another screen, dispatching a stop event or pausing it
+                        audioState.togglePlayback?.();
+                      }
+                    }}
+                  >
+                    <Square size={20} color={textPrimary} fill={textPrimary} />
+                  </TouchableOpacity>
+                )}
+
+                <TouchableOpacity
+                  style={styles.miniPlayerBtn}
+                  onPress={() => {
+                    if (localPlayer.isPlaying) {
+                      handlePauseLocal();
+                    } else if (audioState.isPlaying) {
+                      audioState.togglePlayback?.();
+                    } else if (lastPersistedAudio) {
+                      // Resume from persisted session
+                      const reciter = reciters
+                        .find(r => r.id === lastPersistedAudio.reciterId) || DEFAULT_RECITER;
+                      setSelectedReciter(reciter);
+                      playWithConfig(
+                        lastPersistedAudio.surahNumber,
+                        lastPersistedAudio.ayahNumber,
+                        lastPersistedAudio.surahNumber,
+                        999,
+                        reciter,
+                      );
+                    } else {
+                      handlePlayLocal();
+                    }
+                  }}
+                >
+                  {(localPlayer.isPlaying || audioState.isPlaying)
+                    ? <PauseCircle size={24} color={textPrimary} />
+                    : <PlayCircle size={24} color={textPrimary} />
                   }
-                }}
-              >
-                {(isLocalPlaying || audioState.isPlaying)
-                  ? <PauseCircle size={24} color={textPrimary} />
-                  : <PlayCircle size={24} color={textPrimary} />
-                }
-              </TouchableOpacity>
+                </TouchableOpacity>
+              </>
             )}
           </View>
         </View>

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, TouchableWithoutFeedback, Dimensions } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { Calendar, ChevronLeft, ChevronRight, X, BookOpen, CheckCircle, Flame } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
@@ -320,7 +320,7 @@ export const StreakCard = () => {
         <TouchableWithoutFeedback onPress={() => setSelectedDateStr(null)}>
           <View style={styles.modalBackdrop}>
             {/* The Blur Effect */}
-            <BlurView intensity={isDark ? 30 : 50} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
+            <GlassBlur intensity={isDark ? 30 : 50} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
             
             {/* The Popover Card */}
             <TouchableWithoutFeedback>

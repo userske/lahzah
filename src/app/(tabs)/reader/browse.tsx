@@ -17,7 +17,7 @@ import {
   SectionList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../../components/ui/GlassCard';
 import { router } from 'expo-router';
 import Animated, { FadeInDown, Easing } from 'react-native-reanimated';
 import { Menu, Search, XCircle } from 'lucide-react-native';
@@ -228,13 +228,13 @@ export default function QuranBrowseScreen() {
               source={require('../../../../assets/images/mosque_pastel_bg.jpg')} 
               style={StyleSheet.absoluteFill} 
             />
-            <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill}>
+            <GlassBlur intensity={40} tint="dark" style={StyleSheet.absoluteFill}>
               <View style={styles.heroContent}>
                 <Text style={styles.heroLabel}>Last Read</Text>
                 <Text style={styles.heroTitle}>{recents[0].name}</Text>
                 <Text style={styles.heroSubtitle}>Ayah No: {position?.ayahNumber ?? 1}</Text>
               </View>
-            </BlurView>
+            </GlassBlur>
           </View>
         </TouchableOpacity>
       )}
@@ -257,25 +257,6 @@ export default function QuranBrowseScreen() {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* ── Search Bar (Surahs only) ── */}
-      {tab === 'surahs' && (
-        <View style={styles.searchWrap}>
-          <Search size={15} color={colors.textTertiary} />
-          <TextInput
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search surah…"
-            placeholderTextColor={colors.textTertiary}
-            style={styles.searchInput}
-          />
-          {query.length > 0 && (
-            <TouchableOpacity onPress={() => setQuery('')}>
-              <XCircle size={15} color={colors.textTertiary} />
-            </TouchableOpacity>
-          )}
-        </View>
-      )}
 
 
       {/* ── Content ── */}

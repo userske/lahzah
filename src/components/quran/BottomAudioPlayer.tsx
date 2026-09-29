@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   Pressable,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { Check, Clock, MoreHorizontal, X, Play, Pause } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
@@ -163,7 +163,7 @@ export function BottomAudioPlayer({
           </TouchableOpacity>
         </View>
       ) : (
-        <BlurView
+        <GlassBlur
           intensity={isDark ? 50 : 80}
           tint={isDark ? 'dark' : 'light'}
           style={[styles.bar, { borderColor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.08)' }]}
@@ -209,7 +209,7 @@ export function BottomAudioPlayer({
           >
             <X size={18} color={colors.textSecondary} />
           </TouchableOpacity>
-        </BlurView>
+        </GlassBlur>
       )}
 
       {/* ── Reciter Picker Sheet ── */}

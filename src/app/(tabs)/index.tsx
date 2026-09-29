@@ -254,19 +254,6 @@ export default function TodayScreen() {
             />
           </Animated.View>
 
-          {/* ─── Global Search Bar ─── */}
-          <Animated.View entering={smoothEntry.delay(60)} style={{ paddingHorizontal: 20, marginTop: 16 }}>
-            <TouchableOpacity 
-              style={[styles.searchBar, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)', borderColor: plate.rule }]}
-              onPress={() => router.push('/(tabs)/reader/search')}
-            >
-              <Search size={20} color={plate.ink} style={{ opacity: 0.5 }} />
-              <Text style={{ marginLeft: 12, color: plate.graphite, fontSize: 16, fontFamily: Fonts.sans }}>
-                Search the Quran...
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
-
 
           {/* ─── Continue Reading ─── */}
           <Animated.View entering={smoothEntry.delay(80)}>

@@ -8,7 +8,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { X, ChevronDown, ChevronUp, BookOpen, ArrowRight, Target } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
@@ -276,7 +276,7 @@ export function CircleGoalPickerModal({
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
-      <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
 
         <View style={[styles.sheet, { backgroundColor: isDark ? 'rgba(18,18,18,0.92)' : 'rgba(250,250,250,0.92)' }]}>
@@ -536,7 +536,7 @@ export function CircleGoalPickerModal({
             )}
           </ScrollView>
         </View>
-      </BlurView>
+      </GlassBlur>
     </Modal>
   );
 }

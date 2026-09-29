@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { X, UserCircle } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
@@ -48,7 +48,7 @@ export function MemberRoleModal({ visible, onClose, circleId, memberData, onUpda
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={onClose}>
-      <BlurView intensity={80} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill}>
+      <GlassBlur intensity={80} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill}>
         <View style={[styles.container, { backgroundColor: isDark ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.95)' }]}>
           <View style={[styles.header, { borderBottomColor: colors.border }]}>
             <Text style={[styles.title, { color: colors.text }]}>Assign Member Titles</Text>
@@ -111,7 +111,7 @@ export function MemberRoleModal({ visible, onClose, circleId, memberData, onUpda
             }}
           />
         </View>
-      </BlurView>
+      </GlassBlur>
     </Modal>
   );
 }

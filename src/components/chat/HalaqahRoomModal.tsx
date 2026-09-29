@@ -17,7 +17,7 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { X, Mic, MicOff, PhoneOff, Users, Volume2, VolumeX } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
@@ -384,7 +384,7 @@ export function HalaqahRoomModal({
 
   return (
     <Modal visible={visible} animationType="slide" transparent onRequestClose={handleClose}>
-      <BlurView intensity={80} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill}>
+      <GlassBlur intensity={80} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill}>
         <View style={[
           styles.container,
           { backgroundColor: isDark ? 'rgba(10,10,15,0.95)' : 'rgba(245,245,250,0.97)' },
@@ -409,7 +409,7 @@ export function HalaqahRoomModal({
 
           {renderContent()}
         </View>
-      </BlurView>
+      </GlassBlur>
     </Modal>
   );
 }

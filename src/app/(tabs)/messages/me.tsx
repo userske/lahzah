@@ -5,7 +5,7 @@ import {
   Alert, ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   ArrowLeft, BookOpen, Brain, RefreshCw, Target, Pencil,
@@ -401,7 +401,7 @@ export default function MeChatScreen() {
         )}
 
         {/* ── Composer ── */}
-        <BlurView intensity={80} tint={isDark ? 'dark' : 'light'} style={[styles.composer, { backgroundColor: isDark ? 'rgba(10,10,10,0.85)' : 'rgba(255,255,255,0.85)' }]}>
+        <GlassBlur intensity={80} tint={isDark ? 'dark' : 'light'} style={[styles.composer, { backgroundColor: isDark ? 'rgba(10,10,10,0.85)' : 'rgba(255,255,255,0.85)' }]}>
           <TouchableOpacity onPress={() => setShowRangePicker(true)} style={[styles.composerGoalBtn, { borderColor: colors.border }]}>
             <Target size={20} color={colors.primary} />
           </TouchableOpacity>
@@ -420,7 +420,7 @@ export default function MeChatScreen() {
           >
             {sending ? <ActivityIndicator size="small" color="#fff" /> : <Send size={18} color={text.trim() ? '#fff' : colors.textTertiary} />}
           </TouchableOpacity>
-        </BlurView>
+        </GlassBlur>
       </KeyboardAvoidingView>
 
       <CircleGoalPickerModal

@@ -10,7 +10,7 @@ import { Fonts } from '../../../constants/theme';
 import { DhikrItem, GENERAL_ADHKAR } from '../../../data/adhkar';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, Easing, useAnimatedProps, interpolateColor } from 'react-native-reanimated';
 import Svg, { Circle } from 'react-native-svg';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 
 const { width } = Dimensions.get('window');
 const CIRCLE_SIZE = width * 0.75;
@@ -276,7 +276,7 @@ export default function TasbihCounter() {
           <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
             <View style={styles.modalDismissArea} />
           </TouchableWithoutFeedback>
-          <BlurView intensity={isDark ? 30 : 50} tint={isDark ? 'dark' : 'light'} style={[styles.modalContent, { backgroundColor: isDark ? 'rgba(30,30,30,0.8)' : 'rgba(255,255,255,0.9)' }]}>
+          <GlassBlur intensity={isDark ? 30 : 50} tint={isDark ? 'dark' : 'light'} style={[styles.modalContent, { backgroundColor: isDark ? 'rgba(30,30,30,0.8)' : 'rgba(255,255,255,0.9)' }]}>
             
             {/* Dragger */}
             <View style={styles.modalDragger} />
@@ -371,7 +371,7 @@ export default function TasbihCounter() {
             <TouchableOpacity style={[styles.doneBtn, { backgroundColor: colors.primary }]} onPress={() => setModalVisible(false)}>
               <Text style={[styles.doneBtnText, { color: contrastColor }]}>DONE</Text>
             </TouchableOpacity>
-          </BlurView>
+          </GlassBlur>
         </KeyboardAvoidingView>
       </Modal>
     </View>

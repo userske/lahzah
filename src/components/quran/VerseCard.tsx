@@ -1,5 +1,5 @@
 import { setAudioModeAsync, useAudioPlayer } from 'expo-audio';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import * as Haptics from 'expo-haptics';
 import { AlertCircle, BookOpen, Bookmark, CheckCircle2, Eye, Heart, MoreHorizontal, PauseCircle, PlayCircle, Share2 } from 'lucide-react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -235,7 +235,7 @@ export const VerseCard = ({
 
         {/* Hifz Mode Blur Overlay */}
         {isBlurred && (
-          <BlurView intensity={isDark ? 30 : 25} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
+          <GlassBlur intensity={isDark ? 30 : 25} tint={isDark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
         )}
         {isBlurred && onUnblur && (
           <TouchableOpacity

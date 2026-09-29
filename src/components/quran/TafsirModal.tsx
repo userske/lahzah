@@ -12,7 +12,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { X } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
@@ -119,7 +119,7 @@ export const TafsirModal = ({ verseKey, arabicText, verseTranslation, onClose }:
       <View style={styles.overlay}>
         <TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
         <Animated.View style={[styles.sheet, { transform: [{ translateY }] }]}>
-          <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={styles.blurContainer}>
+          <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={styles.blurContainer}>
 
             {/* ── Drag Handle ── */}
             <View style={styles.dragArea} {...panResponder.panHandlers}>
@@ -177,7 +177,7 @@ export const TafsirModal = ({ verseKey, arabicText, verseTranslation, onClose }:
               )}
             </ScrollView>
 
-          </BlurView>
+          </GlassBlur>
         </Animated.View>
       </View>
     </Modal>

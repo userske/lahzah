@@ -3,7 +3,7 @@
  * the Browse screen (hamburger) and the Reader screen (⋯ button).
  */
 import { Modal, View, Text, Switch, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { X } from 'lucide-react-native';
 import { Fonts } from '../../constants/theme';
@@ -41,13 +41,13 @@ export function ReaderSettingsModal({
             entering={FadeIn.duration(300)}
             exiting={FadeOut.duration(300)}
           >
-            <BlurView
+            <GlassBlur
               style={StyleSheet.absoluteFill}
               tint={isDark ? 'dark' : 'light'}
               intensity={40}
             >
               <Pressable style={StyleSheet.absoluteFill} onPress={onClose} />
-            </BlurView>
+            </GlassBlur>
           </Animated.View>
         )}
 

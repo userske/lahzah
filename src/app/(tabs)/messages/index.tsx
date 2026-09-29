@@ -13,7 +13,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft, BookOpen, ChevronRight, Clock, Link, PlusCircle, RefreshCw, Send, Target, UserCheck, UserPlus, Users, Video, LogOut, Trash2, Lock } from 'lucide-react-native';
 import Animated, { FadeInDown, Easing } from 'react-native-reanimated';
@@ -370,7 +370,7 @@ export default function CirclesScreen() {
 
       <SafeAreaView style={styles.safeArea} edges={['top']}>
         {/* ── Header ── */}
-        <BlurView intensity={18} tint={isDark ? 'dark' : 'light'} style={styles.header}>
+        <GlassBlur intensity={18} tint={isDark ? 'dark' : 'light'} style={styles.header}>
           <View>
             <Text style={styles.headerTitle}>Circles</Text>
             <Text style={styles.headerSub}>Read together, grow together</Text>
@@ -378,7 +378,7 @@ export default function CirclesScreen() {
           <TouchableOpacity style={styles.refreshBtn} onPress={refresh}>
             <RefreshCw size={16} color="#fff" />
           </TouchableOpacity>
-        </BlurView>
+        </GlassBlur>
 
         {/* ── Me Card — personal goals & journal ── */}
         <Animated.View entering={smoothEntry}>
@@ -387,7 +387,7 @@ export default function CirclesScreen() {
             activeOpacity={0.82}
             style={{ marginHorizontal: 18, marginTop: 14 }}
           >
-            <BlurView intensity={20} tint={isDark ? 'dark' : 'light'} style={styles.meCard}>
+            <GlassBlur intensity={20} tint={isDark ? 'dark' : 'light'} style={styles.meCard}>
               <LinearGradient
                 colors={['rgba(255,255,255,0.1)', 'rgba(255,255,255,0)']}
                 style={[StyleSheet.absoluteFill, { borderRadius: 20 }]}
@@ -408,7 +408,7 @@ export default function CirclesScreen() {
                 </View>
               </View>
               <ChevronRight size={18} color="rgba(255,255,255,0.4)" />
-            </BlurView>
+            </GlassBlur>
           </TouchableOpacity>
         </Animated.View>
 
@@ -483,13 +483,13 @@ export default function CirclesScreen() {
             <ActivityIndicator color="#fff" size="large" style={{ marginTop: 60 }} />
           ) : circles.length === 0 ? (
             <Animated.View entering={smoothEntry.delay(100)} style={styles.emptyState}>
-              <BlurView intensity={20} tint="dark" style={styles.emptyCard}>
+              <GlassBlur intensity={20} tint="dark" style={styles.emptyCard}>
                 <Users size={44} color="rgba(255,255,255,0.6)" />
                 <Text style={styles.emptyTitle}>No Circles Yet</Text>
                 <Text style={styles.emptySub}>
                   Create a new circle or join an existing one to read together.
                 </Text>
-              </BlurView>
+              </GlassBlur>
             </Animated.View>
           ) : (
             circles.map((circle, idx) => (
@@ -503,7 +503,7 @@ export default function CirclesScreen() {
                   activeOpacity={0.8}
                   delayLongPress={400}
                 >
-                  <BlurView intensity={24} tint={isDark ? 'dark' : 'light'} style={styles.circleCard}>
+                  <GlassBlur intensity={24} tint={isDark ? 'dark' : 'light'} style={styles.circleCard}>
                     {/* Subtle top sheen */}
                     <LinearGradient
                       colors={['rgba(255,255,255,0.12)', 'rgba(255,255,255,0)']}
@@ -539,7 +539,7 @@ export default function CirclesScreen() {
                       )}
                     </View>
                     <ChevronRight size={18} color="rgba(255,255,255,0.4)" />
-                  </BlurView>
+                  </GlassBlur>
                 </TouchableOpacity>
               </Animated.View>
             ))
@@ -548,11 +548,11 @@ export default function CirclesScreen() {
           {/* ── Philosophy callout ── */}
           {circles.length > 0 && (
             <Animated.View entering={smoothEntry.delay(400)}>
-              <BlurView intensity={14} tint="dark" style={styles.philCard}>
+              <GlassBlur intensity={14} tint="dark" style={styles.philCard}>
                 <Text style={styles.philText}>
                   "Circles show shared presence, not ranking. The goal is quiet accountability — knowing others showed up today."
                 </Text>
-              </BlurView>
+              </GlassBlur>
             </Animated.View>
           )}
 

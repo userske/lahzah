@@ -22,7 +22,7 @@ import { Fonts } from '../../../constants/theme';
 import MapView, { Marker, MapType, Polyline } from 'react-native-maps';
 
 import Svg, { Path, Circle, G, Defs, RadialGradient, Stop } from 'react-native-svg';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 
 interface Mosque {
   id: string;
@@ -739,7 +739,7 @@ export default function MosqueFinderScreen() {
 
       <SafeAreaView pointerEvents="box-none" style={styles.overlayArea}>
         {navigatingMosque ? (
-          <BlurView intensity={80} tint={isDark ? 'dark' : 'prominent'} style={[styles.turnCard, { borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)' }]}>
+          <GlassBlur intensity={80} tint={isDark ? 'dark' : 'prominent'} style={[styles.turnCard, { borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)' }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16, marginBottom: 12 }}>
               <Navigation size={32} color={isDark ? '#fff' : '#000'} style={{ transform: [{ rotate: '45deg' }] }} />
               <Text style={[styles.turnCardText, { color: isDark ? '#fff' : '#000' }]} numberOfLines={2}>
@@ -767,9 +767,9 @@ export default function MosqueFinderScreen() {
                 </TouchableOpacity>
               </View>
             </View>
-          </BlurView>
+          </GlassBlur>
         ) : (
-          <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.header, { borderColor: colors.border }]}>
+          <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.header, { borderColor: colors.border }]}>
             <Text style={[styles.title, { color: colors.text }]}>Nearby Mosques</Text>
             <View style={{ flexDirection: 'row', gap: 12 }}>
               <TouchableOpacity
@@ -786,7 +786,7 @@ export default function MosqueFinderScreen() {
                 <RefreshCw size={20} color={accentColor} />
               </TouchableOpacity>
             </View>
-          </BlurView>
+          </GlassBlur>
         )}
 
         {/* Search Modal */}
@@ -799,7 +799,7 @@ export default function MosqueFinderScreen() {
           <View style={[styles.modalOverlay, { backgroundColor: isDark ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.4)' }]}>
             <View style={{ width: '100%', paddingHorizontal: 16, marginTop: 60, gap: 8 }}>
               {/* Search Bar */}
-              <BlurView intensity={isDark ? 50 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.searchBar, { borderColor: colors.border }]}>
+              <GlassBlur intensity={isDark ? 50 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.searchBar, { borderColor: colors.border }]}>
                 <Search size={18} color={colors.textSecondary} />
                 <TextInput
                   style={[styles.searchInput, { color: colors.text }]}
@@ -819,10 +819,10 @@ export default function MosqueFinderScreen() {
                 >
                   <X size={20} color={accentColor} />
                 </TouchableOpacity>
-              </BlurView>
+              </GlassBlur>
               {/* Autocomplete Dropdown */}
               {searchSuggestions.length > 0 && (
-                <BlurView intensity={isDark ? 50 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.suggestionsList, { borderColor: colors.border }]}>
+                <GlassBlur intensity={isDark ? 50 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.suggestionsList, { borderColor: colors.border }]}>
                   {searchSuggestions.map((s, i) => (
                     <TouchableOpacity
                       key={s.placeId}
@@ -838,7 +838,7 @@ export default function MosqueFinderScreen() {
                       </Text>
                     </TouchableOpacity>
                   ))}
-                </BlurView>
+                </GlassBlur>
               )}
             </View>
           </View>
@@ -878,7 +878,7 @@ export default function MosqueFinderScreen() {
 
       {/* Mosque info bottom card — shown when a marker is tapped */}
       {selectedMosque && !navigatingMosque && (
-        <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.bottomCard, { borderColor: colors.border }]}>
+        <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.bottomCard, { borderColor: colors.border }]}>
           <View style={styles.bottomCardDragBar} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
             <View style={{ flex: 1, marginRight: 12 }}>
@@ -924,21 +924,21 @@ export default function MosqueFinderScreen() {
               <Text style={[styles.directionsText, { color: accentColor }]}>Walk</Text>
             </TouchableOpacity>
           </View>
-        </BlurView>
+        </GlassBlur>
       )}
-      <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.mapTypeBtn, { borderColor: colors.border }]}>
+      <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.mapTypeBtn, { borderColor: colors.border }]}>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }} onPress={cycleMapType}>
         {(() => { const Icon = MAP_TYPE_ICONS[mapType]; return <Icon size={20} color={accentColor} />; })()}
         <Text style={[styles.mapTypeBtnText, { color: colors.text }]}>{MAP_TYPE_LABELS[mapType]}</Text>
         </TouchableOpacity>
-      </BlurView>
+      </GlassBlur>
 
       {/* Center on user */}
-      <BlurView intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.locationBtn, { borderColor: colors.border }]}>
+      <GlassBlur intensity={isDark ? 60 : 80} tint={isDark ? 'dark' : 'light'} style={[styles.locationBtn, { borderColor: colors.border }]}>
         <TouchableOpacity style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} onPress={centerOnUser}>
         <Navigation size={24} color={accentColor} />
         </TouchableOpacity>
-      </BlurView>
+      </GlassBlur>
 
 
     </View>

@@ -5,6 +5,52 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { LiquidGlassView, isLiquidGlassSupported } from '@callstack/liquid-glass';
 import { useAppTheme } from '../../hooks/useAppTheme';
 
+// ─── GlassBlur ─────────────────────────────────────────────────────────────────
+/**
+ * Drop-in replacement for `BlurView` that upgrades to `LiquidGlassView` on
+ * iOS 26+ devices. Use this everywhere you previously used `BlurView` so that
+ * the liquid glass effect rolls out app-wide automatically.
+ *
+ * Props mirror BlurView so migration is a 1:1 rename.
+ */
+interface GlassBlurProps {
+  children?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+  intensity?: number;
+  tint?: BlurTint;
+  /** Pass 'dark' to use the dark liquid glass effect variant. */
+  effect?: 'regular' | 'dark' | 'clear';
+}
+
+export function GlassBlur({
+  children,
+  style,
+  intensity = 20,
+  tint,
+  effect,
+}: GlassBlurProps) {
+  const { isDark } = useAppTheme();
+  const resolvedEffect = effect ?? (tint === 'dark' || isDark ? 'dark' : 'regular');
+
+  if (isLiquidGlassSupported) {
+    return (
+      <LiquidGlassView effect={resolvedEffect} style={style}>
+        {children}
+      </LiquidGlassView>
+    );
+  }
+
+  return (
+    <BlurView
+      intensity={intensity}
+      tint={tint ?? (isDark ? 'dark' : 'light')}
+      style={style}
+    >
+      {children}
+    </BlurView>
+  );
+}
+
 /**
  * Cards rendered inside this provider paint a solid fill instead of a blur.
  * `react-native-view-shot` cannot snapshot a native blur layer, so anything

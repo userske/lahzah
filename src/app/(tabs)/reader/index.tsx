@@ -21,7 +21,7 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../../components/ui/GlassCard';
 import { ChevronLeft, ChevronUp, Mic, Square, MoreHorizontal, X, Search } from 'lucide-react-native';
 import { useReaderSettings } from '../../../hooks/useReaderSettings';
 import { setReaderSettings } from '../../../state/readerSettings';
@@ -769,7 +769,7 @@ export default function ReaderScreen() {
       ]}>
         <View style={{ flex: 1, alignItems: 'flex-start' }}>
           <TouchableOpacity style={styles.glassIconBtn} onPress={() => router.push('/(tabs)/reader/browse')}>
-            <BlurView intensity={20} tint="light" style={styles.glassBg} />
+            <GlassBlur intensity={20} tint="light" style={styles.glassBg} />
             <ChevronLeft size={24} color={colors.text} />
           </TouchableOpacity>
         </View>
@@ -788,17 +788,17 @@ export default function ReaderScreen() {
 
         <View style={{ flex: 1, flexDirection: 'row', gap: 8, justifyContent: 'flex-end' }}>
           <TouchableOpacity style={styles.glassIconBtn} onPress={() => router.push('/(tabs)/reader/search')}>
-            <BlurView intensity={20} tint="light" style={styles.glassBg} />
+            <GlassBlur intensity={20} tint="light" style={styles.glassBg} />
             <Search size={20} color={colors.text} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.glassIconBtn} onPress={() => setShowListenerModal(true)}>
-            <BlurView intensity={20} tint="light" style={styles.glassBg} />
+            <GlassBlur intensity={20} tint="light" style={styles.glassBg} />
             <Mic size={20} color={isRecording ? colors.primary : colors.text} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.glassIconBtn} onPress={() => setShowSettingsModal(true)}>
-            <BlurView intensity={20} tint="light" style={styles.glassBg} />
+            <GlassBlur intensity={20} tint="light" style={styles.glassBg} />
             <MoreHorizontal size={24} color={colors.text} />
           </TouchableOpacity>
         </View>
@@ -899,7 +899,7 @@ export default function ReaderScreen() {
                 source={require('../../../../assets/images/mosque_pastel_bg.jpg')} 
                 style={StyleSheet.absoluteFill} 
               />
-              <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill}>
+              <GlassBlur intensity={40} tint="dark" style={StyleSheet.absoluteFill}>
                 <View style={styles.heroInner}>
                   <Text style={styles.heroSurahName}>{currentChapter.name_simple}</Text>
                   <Text style={styles.heroSurahMeta}>
@@ -911,7 +911,7 @@ export default function ReaderScreen() {
                     <Text style={styles.heroBismillah}>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</Text>
                   )}
                 </View>
-              </BlurView>
+              </GlassBlur>
             </View>
           )}
 

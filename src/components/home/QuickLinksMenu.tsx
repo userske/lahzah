@@ -1,4 +1,4 @@
-import { BlurView } from 'expo-blur';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { router } from 'expo-router';
 import { BookOpen, HandHeart, Menu, Star, Sun, Target, X } from 'lucide-react-native';
 import { useState } from 'react';
@@ -61,13 +61,13 @@ export function QuickLinksMenu() {
               entering={FadeIn.duration(300)}
               exiting={FadeOut.duration(300)}
             >
-              <BlurView
+              <GlassBlur
                 style={StyleSheet.absoluteFill}
                 tint={isDark ? 'dark' : 'light'}
                 intensity={40}
               >
                 <Pressable style={StyleSheet.absoluteFill} onPress={toggleMenu} />
-              </BlurView>
+              </GlassBlur>
             </Animated.View>
           )}
 
