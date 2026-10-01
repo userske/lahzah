@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Lahzah",
-    "slug": "temp_app",
+    "slug": "lahzah",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,6 @@
         "UIBackgroundModes": [
           "audio"
         ],
-
         "NSCameraUsageDescription": "Allow Lahzah to access your camera for group video calls.",
         "NSMicrophoneUsageDescription": "Allow Lahzah to access your microphone for voice rooms.",
         "NSSupportsLiveActivities": true,
@@ -81,7 +80,6 @@
           ]
         }
       ],
-
       "expo-sqlite",
       "@livekit/react-native-expo-plugin",
       "@config-plugins/react-native-webrtc"
@@ -93,8 +91,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "77c559f1-ccbf-46a4-ae9f-b204685326e4"
+        "projectId": "045109a9-87be-4225-9ba4-21183e5ec8b5"
       }
-    }
+    },
+    "owner": "twalibania"
   }
 }
