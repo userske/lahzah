@@ -1,5 +1,5 @@
 import { setAudioModeAsync, useAudioPlayer } from 'expo-audio';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import * as Haptics from 'expo-haptics';
 import { AlertCircle, BookOpen, Bookmark, CheckCircle2, Eye, Heart, MoreHorizontal, PauseCircle, PlayCircle, Share2 } from 'lucide-react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';

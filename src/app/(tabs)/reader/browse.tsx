@@ -17,7 +17,7 @@ import {
   SectionList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { GlassBlur } from '../../../../components/ui/GlassCard';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { router } from 'expo-router';
 import Animated, { FadeInDown, Easing } from 'react-native-reanimated';
 import { Menu, Search, XCircle } from 'lucide-react-native';

@@ -1,4 +1,4 @@
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import { router } from 'expo-router';
 import { BookOpen, HandHeart, Menu, Star, Sun, Target, X } from 'lucide-react-native';
 import { useState } from 'react';

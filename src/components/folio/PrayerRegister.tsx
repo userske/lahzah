@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { View, Text, StyleSheet, ImageBackground, Animated, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import TrackPlayer from 'react-native-track-player';
 import { setAudioModeAsync } from 'expo-audio';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import * as Location from 'expo-location';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';

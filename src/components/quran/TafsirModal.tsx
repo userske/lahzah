@@ -12,7 +12,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import { X } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';

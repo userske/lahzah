@@ -8,7 +8,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import { X, ChevronDown, ChevronUp, BookOpen, ArrowRight, Target } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';

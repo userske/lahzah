@@ -21,7 +21,7 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { GlassBlur } from '../../../../components/ui/GlassCard';
+import { GlassBlur } from '../../../components/ui/GlassCard';
 import { ChevronLeft, ChevronUp, Mic, Square, MoreHorizontal, X, Search } from 'lucide-react-native';
 import { useReaderSettings } from '../../../hooks/useReaderSettings';
 import { setReaderSettings } from '../../../state/readerSettings';

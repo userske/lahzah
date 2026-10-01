@@ -1,4 +1,4 @@
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowRight, BookOpen, PauseCircle, PlayCircle, Settings, Square } from 'lucide-react-native';
 import { useEffect, useState } from 'react';

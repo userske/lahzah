@@ -19,7 +19,8 @@ interface GlassBlurProps {
   intensity?: number;
   tint?: BlurTint;
   /** Pass 'dark' to use the dark liquid glass effect variant. */
-  effect?: 'regular' | 'dark' | 'clear';
+  colorScheme?: 'light' | 'dark' | 'system';
+  effect?: 'regular' | 'none' | 'clear';
 }
 
 export function GlassBlur({
@@ -27,14 +28,15 @@ export function GlassBlur({
   style,
   intensity = 20,
   tint,
-  effect,
+  effect = 'regular',
+  colorScheme,
 }: GlassBlurProps) {
   const { isDark } = useAppTheme();
-  const resolvedEffect = effect ?? (tint === 'dark' || isDark ? 'dark' : 'regular');
+  const resolvedColorScheme = colorScheme ?? (tint === 'dark' || isDark ? 'dark' : 'light');
 
   if (isLiquidGlassSupported) {
     return (
-      <LiquidGlassView effect={resolvedEffect} style={style}>
+      <LiquidGlassView effect={effect} colorScheme={resolvedColorScheme} style={style}>
         {children}
       </LiquidGlassView>
     );
@@ -163,7 +165,8 @@ export function GlassCard({
   if (isLiquidGlassSupported) {
     return (
       <LiquidGlassView
-        effect={isDark ? "dark" : "regular"}
+        effect="regular"
+        colorScheme={isDark ? "dark" : "light"}
         style={containerStyle}
       >
         {/* We retain a very light fill if requested, otherwise LiquidGlass handles the refraction */}

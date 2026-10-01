@@ -17,7 +17,7 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import { X, Mic, MicOff, PhoneOff, Users, Volume2, VolumeX } from 'lucide-react-native';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';

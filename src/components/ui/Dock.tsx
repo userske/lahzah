@@ -239,7 +239,8 @@ export function Dock({ state, navigation }: DockProps) {
     >
       {isLiquidGlassSupported ? (
         <LiquidGlassView
-          effect={isNight ? 'dark' : 'regular'}
+          effect="regular"
+          colorScheme={isNight ? 'dark' : 'light'}
           style={glassStyle}
         >
           {dockContent}

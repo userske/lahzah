@@ -16,7 +16,7 @@ import { ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { usePreferences } from '../../hooks/usePreferences';
 import { useAudioDownload } from '../../hooks/useAudioDownload';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import { useAppTheme } from '../../hooks/useAppTheme';
 import { Fonts } from '../../constants/theme';
 import { Reciter } from '../../data/reciters';

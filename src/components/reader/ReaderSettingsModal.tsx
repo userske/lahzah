@@ -3,7 +3,7 @@
  * the Browse screen (hamburger) and the Reader screen (⋯ button).
  */
 import { Modal, View, Text, Switch, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-import { GlassBlur } from '../../../components/ui/GlassCard';
+import { GlassBlur } from '../ui/GlassCard';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { X } from 'lucide-react-native';
 import { Fonts } from '../../constants/theme';
