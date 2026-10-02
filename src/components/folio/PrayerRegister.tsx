@@ -38,6 +38,10 @@ function parseTime(raw: string | undefined): Date | null {
   if (meridiem === 'AM' && hours === 12) hours = 0;
   const d = new Date();
   d.setHours(hours, m, 0, 0);
+  // If this prayer time has already passed today, schedule for tomorrow
+  if (d.getTime() <= Date.now()) {
+    d.setDate(d.getDate() + 1);
+  }
   return d;
 }
 

@@ -25,8 +25,9 @@ const initSttEngine = async () => {
   try {
     // Lazy import: only pulled in when first called, avoiding a crash at app
     // startup on builds/platforms where ReactNativeFs is not registered.
-    // @ts-ignore: type definitions might be missing or incorrect for dynamic import
-    const { createSTT } = await import('react-native-sherpa-onnx');
+    // @ts-ignore: importing from subpath; 'react-native-sherpa-onnx' root does NOT
+    // re-export createSTT — it lives in the 'stt' submodule.
+    const { createSTT } = await import('react-native-sherpa-onnx/stt');
     sttEngine = await createSTT({
       modelPath: { type: 'asset', path: 'models' }, // Bundled via expo-asset plugin in app.json
       modelType: 'zipformer_ctc',
