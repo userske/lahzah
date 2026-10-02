@@ -262,7 +262,7 @@ Building a WebRTC audio engine with screen sharing from scratch is a massive und
 
 ### Status
 
-❌ Not implemented (planned for after all core features are done)
+✅ Implemented
 
 ### Description
 
