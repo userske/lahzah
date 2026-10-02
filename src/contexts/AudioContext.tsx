@@ -5,6 +5,7 @@ import TrackPlayer, {
   State,
   useIsPlaying,
   useProgress,
+  usePlaybackState,
 } from 'react-native-track-player';
 import { Reciter, DEFAULT_RECITER } from '../data/reciters';
 import * as QuranLiveActivity from '../../modules/quran-live-activity/src';
@@ -74,6 +75,14 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   const isPlaying = playing === true;
   const isLoading = bufferingDuringPlay === true;
+  const playState = usePlaybackState();
+
+  // End live activity if playback is stopped, finished, or errored
+  useEffect(() => {
+    if (playState.state === State.Stopped || playState.state === State.Ended || playState.state === State.None || playState.state === State.Error) {
+      QuranLiveActivity.endActivity();
+    }
+  }, [playState.state]);
 
   // Sync Live Activity
   useEffect(() => {
