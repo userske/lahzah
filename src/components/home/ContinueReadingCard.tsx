@@ -155,7 +155,7 @@ export const ContinueReadingCard = ({
           map.push({ surah: s, ayah: null });
         }
         setPlaybackMap(map);
-        await localPlayer.playPlaylist(urls, 0);
+        await localPlayer.playPlaylist(urls, 0, arabicName);
       } else if (reciter.isChapterOnly && reciter.quranicAudioPath) {
         const urls: string[] = [];
         const map: { surah: number; ayah: number | null }[] = [];
@@ -176,7 +176,7 @@ export const ContinueReadingCard = ({
           map.push({ surah: s, ayah: null });
         }
         setPlaybackMap(map);
-        await localPlayer.playPlaylist(urls, 0);
+        await localPlayer.playPlaylist(urls, 0, arabicName);
       } else {
         let allUrls: string[] = [];
         const map: { surah: number; ayah: number | null }[] = [];
@@ -218,7 +218,7 @@ export const ContinueReadingCard = ({
         }
         if (allUrls.length > 0) {
           setPlaybackMap(map);
-          await localPlayer.playPlaylist(allUrls, 0);
+          await localPlayer.playPlaylist(allUrls, 0, arabicName);
         }
       }
     } catch (err) {

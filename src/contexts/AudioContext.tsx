@@ -40,8 +40,8 @@ const setupPlayer = async () => {
 };
 
 interface AudioContextType {
-  playAudio: (url: string) => Promise<void>;
-  playPlaylist: (urls: string[], startIndex?: number) => Promise<void>;
+  playAudio: (url: string, title?: string) => Promise<void>;
+  playPlaylist: (urls: string[], startIndex?: number, surahName?: string) => Promise<void>;
   togglePlayback: () => Promise<void>;
   stopAudio: () => Promise<void>;
   skipTo: (index: number) => void;
@@ -86,7 +86,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     }
   }, [currentIndex, isPlaying]);
 
-  const playAudio = async (url: string) => {
+  const playAudio = async (url: string, title = 'Quran Recitation') => {
     if (!isPlayerInitialized) await setupPlayer();
     setPlaylist([url]);
     setCurrentIndex(0);
@@ -95,7 +95,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       await TrackPlayer.add({
         id: 'track-0',
         url,
-        title: 'Quran Recitation',
+        title,
         artist: selectedReciter.reciter_name,
       });
       await TrackPlayer.play();
@@ -104,7 +104,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const playPlaylist = async (urls: string[], startIndex = 0) => {
+  const playPlaylist = async (urls: string[], startIndex = 0, surahName?: string) => {
     if (!urls.length) return;
     if (!isPlayerInitialized) await setupPlayer();
     
@@ -115,7 +115,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       const tracks = urls.map((u, i) => ({
         id: `track-${i}`,
         url: u,
-        title: `Ayah ${i + 1}`,
+        title: surahName ? `${surahName} - Ayah ${i + 1}` : `Ayah ${i + 1}`,
         artist: selectedReciter.reciter_name,
       }));
       await TrackPlayer.add(tracks);

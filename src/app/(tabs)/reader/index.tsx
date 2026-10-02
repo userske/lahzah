@@ -614,10 +614,9 @@ export default function ReaderScreen() {
           }
         }
       }
-
-      playPlaylist(chapterAudioUrl, Math.min(startIndex, chapterAudioUrl.length - 1));
+      playPlaylist(chapterAudioUrl, Math.min(startIndex, chapterAudioUrl.length - 1), currentChapter?.name_simple);
     }
-  }, [isPlaying, chapterAudioUrl, togglePlayback, playPlaylist, viewMode, mushafFirstVerseKey, position?.ayahNumber, currentSurah, verses]);
+  }, [isPlaying, chapterAudioUrl, togglePlayback, playPlaylist, viewMode, mushafFirstVerseKey, position?.ayahNumber, currentSurah, verses, currentChapter?.name_simple]);
 
   useEffect(() => {
     // Derive the ayah number from the active verse key e.g. "2:255" → 255
@@ -859,7 +858,7 @@ export default function ReaderScreen() {
 
             if (urls.length === 1) {
               // Chapter-only reciter: load the file then seek to the right timestamp
-              playPlaylist(urls, 0);
+              playPlaylist(urls, 0, currentChapter?.name_simple);
               // Wait briefly for player to load, then seek if we have segment data
               setTimeout(() => {
                 if (offlineSegments && offlineSegments[verseKey]) {
@@ -873,7 +872,7 @@ export default function ReaderScreen() {
               }, 600);
             } else {
               // Per-ayah reciter: jump directly to the right track
-              playPlaylist(urls, Math.min(ayahIndex, urls.length - 1));
+              playPlaylist(urls, Math.min(ayahIndex, urls.length - 1), currentChapter?.name_simple);
             }
           }}
           onOpenTafsir={(key, arabic, translation) => {
@@ -964,7 +963,7 @@ export default function ReaderScreen() {
                         // This is robust against paginated verse arrays where `index` could be wrong
                         const vk = item.verse_key?.split(':');
                         const ayahIdx = vk?.length === 2 ? Math.max(0, parseInt(vk[1], 10) - 1) : index;
-                        playPlaylist(chapterAudioUrl, Math.min(ayahIdx, chapterAudioUrl.length - 1));
+                        playPlaylist(chapterAudioUrl, Math.min(ayahIdx, chapterAudioUrl.length - 1), currentChapter?.name_simple);
                       }
                     }}
                     isBlurred={isHifzMode && !unblurredVerses.has(item.verse_key)}
