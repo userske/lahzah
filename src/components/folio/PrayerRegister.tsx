@@ -28,17 +28,29 @@ const PRAYERS = [
   { key: 'isha'    as const, name: 'Isha' },
 ];
 
+/**
+ * parseTime parses a prayer time string into a Date for today (or tomorrow
+ * if it has already passed).  The adhan library formats times in 24-hour
+ * "HH:MM" (en-US, hour12:false), e.g. "05:30", "13:45".
+ * Legacy 12-hour "HH:MM AM" strings are handled as a fallback.
+ */
 function parseTime(raw: string | undefined): Date | null {
   if (!raw) return null;
-  const [time, meridiem] = raw.split(' ');
-  const [h, m] = time.split(':').map(Number);
+  const parts = raw.trim().split(' ');
+  const timePart = parts[0];
+  const meridiem  = parts[1]; // undefined when 24h format
+
+  const [h, m] = timePart.split(':').map(Number);
   if (Number.isNaN(h) || Number.isNaN(m)) return null;
+
   let hours = h;
   if (meridiem === 'PM' && hours < 12) hours += 12;
   if (meridiem === 'AM' && hours === 12) hours = 0;
+  // No meridiem → already 24-hour; hours is already correct
+
   const d = new Date();
   d.setHours(hours, m, 0, 0);
-  // If this prayer time has already passed today, schedule for tomorrow
+  // Roll to tomorrow if this time has already passed today
   if (d.getTime() <= Date.now()) {
     d.setDate(d.getDate() + 1);
   }

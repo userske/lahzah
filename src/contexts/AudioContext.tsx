@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useRef } from 'react';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -68,6 +68,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [playlist, setPlaylist] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedReciter, setSelectedReciter] = useState<Reciter>(DEFAULT_RECITER);
+  // Track whether a Live Activity (Dynamic Island) is currently active
+  const activityActive = useRef(false);
 
   useEffect(() => {
     setupPlayer();
@@ -78,8 +80,17 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
   const playState = usePlaybackState();
 
   // End live activity if playback is stopped, finished, or errored
+  // Guard: only end if we actually started one — State.None fires at startup
+  // before any audio plays and must not prematurely kill a non-existent activity.
   useEffect(() => {
-    if (playState.state === State.Stopped || playState.state === State.Ended || playState.state === State.None || playState.state === State.Error) {
+    if (
+      activityActive.current &&
+      (playState.state === State.Stopped ||
+        playState.state === State.Ended ||
+        playState.state === State.None ||
+        playState.state === State.Error)
+    ) {
+      activityActive.current = false;
       QuranLiveActivity.endActivity();
     }
   }, [playState.state]);
@@ -108,6 +119,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         artist: selectedReciter.reciter_name,
       });
       await TrackPlayer.play();
+      activityActive.current = true;
       QuranLiveActivity.startActivity('Quran', 1, selectedReciter.reciter_name);
     } catch (error) {
     }
@@ -130,7 +142,8 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       await TrackPlayer.add(tracks);
       await TrackPlayer.skip(startIndex);
       await TrackPlayer.play();
-      QuranLiveActivity.startActivity('Quran', startIndex + 1, selectedReciter.reciter_name);
+      activityActive.current = true;
+      QuranLiveActivity.startActivity(surahName ?? 'Quran', startIndex + 1, selectedReciter.reciter_name);
     } catch (error) {
     }
   };
@@ -149,7 +162,10 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     await TrackPlayer.stop();
     await TrackPlayer.seekTo(0);
     setCurrentIndex(0);
-    QuranLiveActivity.endActivity();
+    if (activityActive.current) {
+      activityActive.current = false;
+      QuranLiveActivity.endActivity();
+    }
   };
 
   const seekTo = async (positionSeconds: number) => {
