@@ -9,6 +9,12 @@ public class QuranLiveActivityModule: Module {
 
     AsyncFunction("startActivity") { (surahName: String, ayahNumber: Int, reciterName: String) in
       if #available(iOS 16.1, *) {
+        // End any previously running activity first
+        if let existing = self.currentActivity as? Activity<QuranPlayerAttributes> {
+          Task { await existing.end(nil, dismissalPolicy: .immediate) }
+          self.currentActivity = nil
+        }
+
         let initialState = QuranPlayerAttributes.ContentState(
           surahName: surahName,
           ayahNumber: ayahNumber,

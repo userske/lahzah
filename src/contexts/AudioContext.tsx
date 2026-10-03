@@ -6,9 +6,13 @@ import TrackPlayer, {
   useIsPlaying,
   useProgress,
   usePlaybackState,
+  useActiveTrack,
 } from 'react-native-track-player';
 import { Reciter, DEFAULT_RECITER } from '../data/reciters';
 import * as QuranLiveActivity from '../../modules/quran-live-activity/src';
+
+// Lahzah icon — used as lock screen / Dynamic Island artwork
+const LAHZAH_ARTWORK = require('../../assets/images/icon.png');
 
 // Set up TrackPlayer once
 let isPlayerInitialized = false;
@@ -64,16 +68,29 @@ export const AudioContext = createContext<AudioContextType | null>(null);
 export function AudioProvider({ children }: { children: React.ReactNode }) {
   const { playing, bufferingDuringPlay } = useIsPlaying();
   const { position, duration } = useProgress();
+  const activeTrack = useActiveTrack();
 
   const [playlist, setPlaylist] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedReciter, setSelectedReciter] = useState<Reciter>(DEFAULT_RECITER);
   // Track whether a Live Activity (Dynamic Island) is currently active
   const activityActive = useRef(false);
+  // Store surah name so the Live Activity can be updated on track change
+  const currentSurahName = useRef('Quran');
 
   useEffect(() => {
     setupPlayer();
   }, []);
+
+  // Keep currentIndex in sync when the user skips via lock screen controls
+  useEffect(() => {
+    if (activeTrack) {
+      const idNum = parseInt(String(activeTrack.id ?? '').replace('track-', ''), 10);
+      if (!Number.isNaN(idNum) && idNum !== currentIndex) {
+        setCurrentIndex(idNum);
+      }
+    }
+  }, [activeTrack]);
 
   const isPlaying = playing === true;
   const isLoading = bufferingDuringPlay === true;
@@ -95,32 +112,34 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     }
   }, [playState.state]);
 
-  // Sync Live Activity
+  // Sync Live Activity — updates on every tick so progress bar moves
   useEffect(() => {
-    if (playlist.length > 0) {
+    if (activityActive.current && playlist.length > 0) {
       QuranLiveActivity.updateActivity(
-        currentIndex + 1, // Ayah number roughly matches index + 1 for now
+        currentIndex + 1,
         isPlaying,
         duration > 0 ? position / duration : 0
       );
     }
-  }, [currentIndex, isPlaying]);
+  }, [currentIndex, isPlaying, position]);
 
-  const playAudio = async (url: string, title = 'Quran Recitation') => {
+  const playAudio = async (url: string, title = 'Quran Recitation', surahName?: string) => {
     if (!isPlayerInitialized) await setupPlayer();
     setPlaylist([url]);
     setCurrentIndex(0);
+    currentSurahName.current = surahName ?? title;
     try {
       await TrackPlayer.reset();
       await TrackPlayer.add({
         id: 'track-0',
         url,
-        title,
-        artist: selectedReciter.reciter_name,
+        title: surahName ?? title,
+        artist: `${selectedReciter.reciter_name} • Ayah 1`,
+        artwork: LAHZAH_ARTWORK,
       });
       await TrackPlayer.play();
       activityActive.current = true;
-      QuranLiveActivity.startActivity('Quran', 1, selectedReciter.reciter_name);
+      QuranLiveActivity.startActivity(surahName ?? title, 1, selectedReciter.reciter_name);
     } catch (error) {
     }
   };
@@ -129,6 +148,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     if (!urls.length) return;
     if (!isPlayerInitialized) await setupPlayer();
     
+    currentSurahName.current = surahName ?? 'Quran';
     setPlaylist(urls);
     setCurrentIndex(startIndex);
     try {
@@ -136,8 +156,10 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       const tracks = urls.map((u, i) => ({
         id: `track-${i}`,
         url: u,
-        title: surahName ? `${surahName} - Ayah ${i + 1}` : `Ayah ${i + 1}`,
-        artist: selectedReciter.reciter_name,
+        // Title = Surah name; Artist = Reciter • Ayah N  (shown on lock screen)
+        title: surahName ?? 'Quran',
+        artist: `${selectedReciter.reciter_name} • Ayah ${i + 1}`,
+        artwork: LAHZAH_ARTWORK,
       }));
       await TrackPlayer.add(tracks);
       await TrackPlayer.skip(startIndex);
