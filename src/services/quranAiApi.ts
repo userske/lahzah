@@ -2,7 +2,7 @@
  * quranAiApi.ts — Phoneme-based Tajweed analysis
  *
  * Pipeline:
- *  1. Record audio → sttApi.ts → Muno459/zipformer_p-quran
+ *  1. Record audio as WAV (16kHz, mono) → sttApi.ts → Muno459/zipformer_p-quran
  *     The model returns a space-separated phoneme string (NOT Arabic text).
  *
  *  2. Load canonical phonemes for the target ayah from quranPhonemes.ts
@@ -50,16 +50,22 @@ export const analyzeAudioWithAI = async ({
   uri,
   reference,
 }: AnalyzeAudioParams): Promise<TajweedAnalysisResult> => {
-  // ── Step 1: Transcribe to phonemes ────────────────────────────────────────
+  // ── Step 1: Transcribe to phonemes ─────────────────────────────────────────
   const sttRes = await transcribeAudio(uri);
 
   if (sttRes.error) {
-    throw new Error(sttRes.error);
+    throw new Error(`Transcription failed: ${sttRes.error}`);
   }
 
-  const predictedPhonemes = sttRes.text;
+  const predictedPhonemes = sttRes.text.trim();
 
-  // ── Step 2: Get canonical phonemes ────────────────────────────────────────
+  if (!predictedPhonemes) {
+    throw new Error(
+      'No speech detected. Please recite clearly for at least 2 seconds and try again.',
+    );
+  }
+
+  // ── Step 2: Get canonical phonemes ─────────────────────────────────────────
   let canonicalPhonemes: string | null = null;
   let verseKey = '';
 
@@ -69,33 +75,45 @@ export const analyzeAudioWithAI = async ({
     canonicalPhonemes = await getCanonicalPhonemes(verseKey);
 
     if (!canonicalPhonemes) {
-      throw new Error(`Phoneme data not found for ${verseKey}`);
+      throw new Error(
+        `No phoneme data found for ${verseKey}. The canonical table may not include this ayah.`,
+      );
     }
   } else {
-    // Auto-detect: find nearest ayah in canonical table
+    // Auto-detect: find nearest ayah in canonical table via Jaccard similarity
     const table = await getPhonemeTable();
 
-    // Narrow scope if a surah is given
+    if (Object.keys(table).length === 0) {
+      throw new Error(
+        'Phoneme table could not be loaded. Please check your internet connection and try again.',
+      );
+    }
+
+    // Narrow scope if a surah number is given (e.g. "2")
     let searchTable = table;
     if (reference) {
       const prefix = `${reference}:`;
       searchTable = Object.fromEntries(
-        Object.entries(table).filter(([k]) => k.startsWith(prefix))
+        Object.entries(table).filter(([k]) => k.startsWith(prefix)),
       );
+      if (Object.keys(searchTable).length === 0) {
+        throw new Error(`No ayahs found for Surah ${reference} in the phoneme table.`);
+      }
     }
 
     const [best] = findBestAyah(predictedPhonemes, searchTable);
     if (!best || best.score === 0) {
-      throw new Error('Could not match recitation to any known ayah');
+      throw new Error(
+        'Could not match your recitation to any known ayah. Try reciting a complete ayah clearly.',
+      );
     }
 
     verseKey = best.verseKey;
     canonicalPhonemes = table[verseKey];
   }
 
-  // ── Step 3: Phoneme-level diff ────────────────────────────────────────────
+  // ── Step 3: Phoneme-level diff ─────────────────────────────────────────────
   const { deviations, score } = comparePhonemes(predictedPhonemes, canonicalPhonemes!);
-
 
   return {
     score,
